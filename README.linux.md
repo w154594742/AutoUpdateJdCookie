@@ -105,9 +105,12 @@ send_info = {
     ],
     "send_dingtalk": [
     ],
-    "send_feishu": [
+    "send_pushme": [
+        "https://push.i-i.me/"
     ]
 }
+# pushme的key 详情参考 https://push.i-i.me/docs/
+pushme_key = "XXXXXXXXXXXXXX"
 ```
 
 ### 短信验证码说明
