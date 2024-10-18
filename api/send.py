@@ -1,18 +1,26 @@
 import aiohttp
+import json
 from typing import Dict, Any
+from loguru import logger
 
-
-async def send_message(url: str, data: Dict[str, Any]) -> Dict[str, Any]:
+async def send_message(url: str, data: Dict[str, Any], headers:Dict[str, str] = None) -> Dict[str, Any]:
     """
     发消息的通用方法
     """
-    headers = {
-        'Content-Type': 'application/json',
-    }
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=data, headers=headers) as response:
-            return await response.json()
+    if headers is None:
+        headers = {
+            'Content-Type': 'application/json; charset=UTF-8',
+        }
+        data = json.dumps(data)
 
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, data=data, headers=headers) as response:
+           if response.headers['Content-Type'] == 'application/json':
+                return await response.json()
+           else:
+                return await response.text()
+            
+            
 
 class SendApi(object):
     def __init__(self, name):
@@ -64,5 +72,21 @@ class SendApi(object):
             "content": {
                 "text": msg
             }
+        }
+        return await send_message(url, data)
+    @staticmethod
+    async def send_pushme(url: str, msg: str) -> Dict[str, Any]:
+        """
+        发送到pushme
+        """
+        from config import pushme_key
+        data = {
+            "push_key": pushme_key,
+            "title": "京东CK更新结果",
+            "type": "text",
+            "content": msg
+        }
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
         }
         return await send_message(url, data)

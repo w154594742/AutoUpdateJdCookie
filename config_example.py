@@ -60,8 +60,12 @@ send_info = {
     "send_dingtalk": [
     ],
     "send_feishu": [
+    ],
+    "send_pushme": [
     ]
 }
+# pushme的key
+pushme_key = ""
 
 # sms_func为填写验信验证码的模式，有3种可选，如下：
 # no 关闭短信验证码识别

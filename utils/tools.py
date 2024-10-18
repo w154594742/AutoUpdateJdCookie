@@ -329,8 +329,7 @@ async def send_msg(send_api, send_type: int, msg: str):
         for key in send_info:
             for url in send_info[key]:
                 rep = await send_call_method(send_api, key, url, msg)
-                logger.info(f"发送消息到 {url}, 响应:{rep}")
-
+                logger.info(f"发送消息到:{url}, 响应:{rep}")
     return
 
 
