@@ -531,11 +531,6 @@ async def main():
         # 获取需强制和需要强制更新的users
         forbidden_users = [x for x in user_info if x['name'] == 'JD_COOKIE' and (x['status'] == 1 or x['value'].rstrip(';').split('pt_pin=')[1] in force_update_pt_pins)]
 
-
-        import random
-        await send_msg(send_api, send_type=0, msg=str(random.randint(1, 1000)))
-        return
-
         if not forbidden_users:
             logger.info("所有COOKIE环境变量正常，无需更新")
             return
